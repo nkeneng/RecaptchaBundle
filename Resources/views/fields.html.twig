@@ -1,0 +1,7 @@
+{#this file explains how to render my recaptcha field#}
+{% block recaptcha_submit_widget %}
+    {% set label = button %}
+    {% set attr = attr | merge({class: 'g-recaptcha'}) %}
+    {% block submit_widget %}
+    {% endblock %}
+{% endblock %}
