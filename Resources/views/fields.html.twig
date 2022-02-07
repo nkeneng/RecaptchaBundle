@@ -1,7 +1,22 @@
 {#this file explains how to render my recaptcha field#}
 {% block recaptcha_submit_widget %}
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script>
+        function {{ id }}RecaptchaSubmit(token) {
+            var element = document.getElementById('{{ id }}')
+            while (element.parentElement !== null) {
+                console.log(element.tagName)
+                if (element.tagName === 'FORM') {
+                    console.log('found')
+                    element.submit();
+                    break
+                }
+                element = element.parentElement;
+            }
+        }
+    </script>
     {% set label = button %}
-    {% set attr = attr | merge({class: 'g-recaptcha'}) %}
+    {% set attr = attr | merge({class: 'g-recaptcha', 'data-sitekey': key,'data-callback':id~'RecaptchaSubmit'}) %}
     {% block submit_widget %}
     {% endblock %}
 {% endblock %}

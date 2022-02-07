@@ -1,0 +1,22 @@
+services:
+  recaptcha.type:
+    class: Steven\RecaptchaBundle\Type\RecaptchaSubmitType
+    tags: ['form.type']
+    arguments:
+      # set the key received from the user yaml configuration in the service RecaptchaSubmitType
+      $key: '%recaptcha.key%'
+
+  recaptcha.validator:
+    class: Steven\RecaptchaBundle\Constraints\RecaptchaValidator
+    tags: ['validator.constraint_validator']
+    autowire: true
+
+  recaptcha.google:
+    class: ReCaptcha\ReCaptcha
+    arguments:
+      # set the secret received from the user yaml configuration in the service RecaptchaSubmitType
+      $secret: '%recaptcha.secret%'
+      $requestMethod: ['@recaptcha.method']
+
+  recaptcha.method:
+    class: ReCaptcha\RequestMethod\CurlPost
